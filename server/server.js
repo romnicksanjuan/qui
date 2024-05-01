@@ -65,8 +65,9 @@ app.post('/login', async (req, res) => {
 const verifyToken = (req, res, next) => {
 
   try {
-    const token = req.headers['authorization'].split(' ')[1];
+    const headers = req.headers['authorization'];
     // console.log({token:token})
+    const token = headers.split(' ')[1]
     if (!token) {
       return res.json({ err: 'no token provided' })
     }
