@@ -62,7 +62,26 @@ app.post('/login', async (req, res) => {
 })
 
 
+const verifyToken = (req, res, next) => {
 
+//   try {
+//     const headers = req.headers['authorization'];
+//     const token = headers.split(' ')[1]
+//     if (!token) {
+//       return res.json({ err: 'no token provided' })
+//     }
+
+//     jwt.verify(token, secretKey, (err, decoded) => {
+//       if (err) {
+//         return res.json({ err: 'token expired' })
+//       }
+//       req.userId = decoded.userId
+//     })
+//     next()
+//   } catch (error) {
+//     console.log(error)
+//   }
+}
 
 // Quiz Title
 app.post('/create/:userId', async (req, res) => {
