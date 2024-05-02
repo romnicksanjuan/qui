@@ -192,6 +192,30 @@ app.post('/create-quiz/:userId/:quizId', async (req, res) => {
 });
 
 
+// delete question
+app.post('/quizzes/:quizId/questions/:questionId', async (req, res) => {
+    const { quizId, questionId } = req.params;
+  
+    try {
+      // Find the quiz and remove the specific question
+      const updatedQuiz = await Quiz.findByIdAndUpdate(
+        quizId,
+        { $pull: { questions: { _id:questionId } } },
+        { new: true }
+      );
+  
+      if (!updatedQuiz) {
+        return res.status(404).json({ message: 'Quiz not found' });
+      }
+  
+      res.json({ message: 'Question deleted', updatedQuiz });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
+
+
 app.delete('/create-quiz/:myId/:opId', async (req, res) => {
     const _id = req.params.myId
     const opId = req.params.opId
