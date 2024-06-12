@@ -17,6 +17,11 @@ app.use(express.json())
 app.post('/register', async (req, res) => {
     const { username, password } = req.body
 
+
+    console.log(username.trim())
+    const trimUsername = username.trim()
+    const trimPassword = password.trim()
+
     try {
 
         const check = await User.findOne({ username })
@@ -24,7 +29,7 @@ app.post('/register', async (req, res) => {
         if (check) {
             return res.json({ messageError: 'Username Already Exist!' })
         }
-        const save = new User({ username, password })
+        const save = new User({ username:trimUsername, password:trimPassword })
         await save.save();
         res.json({ message: 'Registered Successfully', save: save })
     } catch (error) {
@@ -444,17 +449,6 @@ app.get('/getStudents/:quizId', async (req, res) => {
         res.json(stud)
         // console.log('this is student answer:',student.userId)
 
-    } catch (error) {
-        console.log(error)
-    }
-})
-
-app.post('/student/asdaskdhhasdasjdjasdjsa-quiz', async (req, res) => {
-    try {
-        const { quizId, studentId, answers, score } = req.body;
-        const studAnswer = new studentAnswer({ quizId, studentId, answers, score })
-        await studAnswer.save()
-        console.log(studAnswer)
     } catch (error) {
         console.log(error)
     }
